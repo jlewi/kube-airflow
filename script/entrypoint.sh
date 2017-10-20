@@ -2,9 +2,9 @@
 
 CMD="airflow"
 TRY_LOOP="10"
-POSTGRES_HOST="postgres"
+POSTGRES_HOST="af-postgres"
 POSTGRES_PORT="5432"
-RABBITMQ_HOST="rabbitmq"
+RABBITMQ_HOST="af-rabbitmq"
 RABBITMQ_CREDS="airflow:airflow"
 FERNET_KEY=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print FERNET_KEY")
 
