@@ -40,6 +40,9 @@ helm-upgrade:
 	             $(HELM_APPLICATION_NAME) \
 	             $(CHART_LOCATION)
 
+helm-ls:
+	helm ls --all $(HELM_APPLICATION_NAME)
+
 helm-uninstall:
 	helm del --purge $(HELM_APPLICATION_NAME)
 
