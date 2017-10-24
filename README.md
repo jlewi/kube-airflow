@@ -15,7 +15,8 @@ This is useful when you'd want:
 This repository contains:
 
 * **Dockerfile(.template)** of [airflow](https://github.com/apache/incubator-airflow) for [Docker](https://www.docker.com/) images published to the public [Docker Hub Registry](https://registry.hub.docker.com/).
-* **airflow.all.yaml** for creating Kubernetes services and deployments to run Airflow on Kubernetes
+* **airflow.all.yaml** for manual creating Kubernetes services and deployments to run Airflow on Kubernetes
+* **Helm Chart** for deployments using Helm
 
 ## Informations
 
@@ -23,17 +24,41 @@ This repository contains:
 * Based on Debian Jessie official Image [debian:jessie](https://registry.hub.docker.com/_/debian/) and uses the official [Postgres](https://hub.docker.com/_/postgres/) as backend and [RabbitMQ](https://hub.docker.com/_/rabbitmq/) as queue
 * Following the Airflow release from [Python Package Index](https://pypi.python.org/pypi/airflow)
 
-## Installation
+## Manual Installation
 
 Create all the deployments and services for Airflow:
 
-        kubectl create -f airflow.all.yaml
+    kubectl create -f airflow.all.yaml
 
-## Build
+## Helm Deployment
+
+Ensure your helm installation is done, you may need to have `TILLER_NAMESPACE` set a an environment
+variable.
+
+Deploy to Kubernetes using:
+
+    make helm-install NAMESPACE=airflow
+
+Remove from the clusting using:
+
+    make helm-uninstall
+
+### Helm configuration customization
+
+Helm allow to overload the configuration to adapt to your environment. You probably want to specify
+your own ingress configuration for instance.
+
+Note:
+ 
+    Do NOT use characters such as " (double quote), ' (simple quote), / (slash) or \ (backslash)
+    in your passwords
+
+
+## Build Docker image
 
 `git clone` this repository and then just run:
 
-        make build
+    make build
 
 ## Usage
 

@@ -1,0 +1,24 @@
+airflow:
+  prefix: ""
+  fernet_key: ""
+  service:
+    type: ClusterIP
+  baseUrl: "/"
+  image: mumoshu/kube-airflow:1.8.0.0-1.6.1
+  ingress:
+    annotations:
+    host:
+    path:
+      web: /airflow
+      flower: /flower
+  db:
+    rabbitmq:
+      user: airflow
+      password: airflow
+      basename: rabbitmq
+      database: airflow
+    postgres:
+      user: airflow
+      password: airflow
+      basename: postgres
+      database: airflow

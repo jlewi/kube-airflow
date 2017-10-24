@@ -52,7 +52,7 @@ RUN set -ex \
     && update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 \
     && useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow \
     && pip uninstall setuptools \
-    && pip install setuptools==33.1.1 \
+    && pip install --upgrade pip enum34 'setuptools!=36.0.0' \
     && pip install pytz==2015.7 \
     && pip install cryptography \
     && pip install pyOpenSSL \
@@ -75,7 +75,7 @@ ENV KUBECTL_VERSION %%KUBECTL_VERSION%%
 RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl && chmod +x /usr/local/bin/kubectl
 
 COPY script/entrypoint.sh ${AIRFLOW_HOME}/entrypoint.sh
-COPY config/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
+COPY config/airflow.cfg.in ${AIRFLOW_HOME}/airflow.cfg.in
 
 RUN chown -R airflow: ${AIRFLOW_HOME} \
     && chmod +x ${AIRFLOW_HOME}/entrypoint.sh

@@ -2,14 +2,27 @@
 
 CMD="airflow"
 TRY_LOOP="10"
-POSTGRES_HOST="postgres"
+POSTGRES_HOST="${POSTGRES_HOST:-postgres}"
 POSTGRES_PORT="5432"
-RABBITMQ_HOST="rabbitmq"
-RABBITMQ_CREDS="airflow:airflow"
-FERNET_KEY=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print FERNET_KEY")
+POSTGRES_CREDS="${POSTGRES_CREDS:-airflow:airflow}"
+RABBITMQ_HOST="${RABBITMQ_HOST:-rabbitmq}"
+RABBITMQ_CREDS="${RABBITMQ_CREDS:-airflow:airflow}"
+
+if [ -z $FERNET_KEY ]; then
+    FERNET_KEY=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print FERNET_KEY")
+fi
+
+echo "Postgres host: $POSTGRES_HOST"
+echo "RabbitMQ host: $RABBITMQ_HOST"
+echo
 
 # Generate Fernet key
-sed -i "s/{FERNET_KEY}/${FERNET_KEY}/" $AIRFLOW_HOME/airflow.cfg
+cp -f $AIRFLOW_HOME/airflow.cfg.in $AIRFLOW_HOME/airflow.cfg
+sed -i "s/{{ FERNET_KEY }}/${FERNET_KEY}/" $AIRFLOW_HOME/airflow.cfg
+sed -i "s/{{ POSTGRES_HOST }}/${POSTGRES_HOST}/" $AIRFLOW_HOME/airflow.cfg
+sed -i "s/{{ POSTGRES_CREDS }}/${RABBITMQ_CREDS}/" $AIRFLOW_HOME/airflow.cfg
+sed -i "s/{{ RABBITMQ_HOST }}/${RABBITMQ_HOST}/" $AIRFLOW_HOME/airflow.cfg
+sed -i "s/{{ RABBITMQ_CREDS }}/${RABBITMQ_CREDS}/" $AIRFLOW_HOME/airflow.cfg
 
 # wait for rabbitmq
 if [ "$1" = "webserver" ] || [ "$1" = "worker" ] || [ "$1" = "scheduler" ] || [ "$1" = "flower" ] ; then
