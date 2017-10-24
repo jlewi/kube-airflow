@@ -1,0 +1,53 @@
+airflow:
+  # common settings and setting for the webserver
+  # For prefix, use only lower case alphanumeric characters, '-' or '.', and must start and end
+  # with an alphanumeric character
+  prefix: " "
+  fernet_key: ""
+  service:
+    type: ClusterIP
+  baseUrl: "/airflow"
+  init_retry_loop:
+  image: mumoshu/kube-airflow:1.8.0.0-1.6.1
+  # image_pull_policy: Always or IfNotPresent
+  image_pull_policy: Always
+  # Set scheduler_num_runs to -1 to loop indefinitively
+  scheduler_num_runs: "-1"
+
+celery:
+  num_workers: 1
+
+ingress:
+  annotations:
+  host: ""
+  path:
+    web: /airflow
+    flower: /flower
+
+db:
+  rabbitmq:
+    # use_embedded == true means final hostname will be prefix + hostname
+    use_embedded: true
+    user: airflow
+    password: airflow
+    hostname: rabbitmq
+    database: airflow
+  postgres:
+    # use_embedded == true means final hostname will be prefix + hostname
+    use_embedded: true
+    user: airflow
+    password: airflow
+    hostname: postgres
+    database: airflow
+
+flower:
+  url_prefix: /flower
+
+dags:
+  git_sync_enabled: false
+  git_repo:
+  git_branch: master
+  poll_interval_sec: 60
+  git_sync_debug: false
+  # Disable Load examples as soon as you enable git_repo
+  load_examples: True
