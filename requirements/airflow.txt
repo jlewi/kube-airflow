@@ -8,5 +8,5 @@ pyOpenSSL
 ndg-httpsclient
 pyasn1
 psycopg2
-airflow[celery,postgresql,hive]
+git+https://github.com/Stibbons/incubator-airflow@url_prefix#egg=airflow
 click
