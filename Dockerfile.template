@@ -60,6 +60,7 @@ RUN set -ex \
     && pip3 install pyasn1 \
     && pip3 install psycopg2 \
     && pip3 install airflow[celery,postgresql,hive] \
+    && pip3 install git+https://github.com/Stibbons/incubator-airflow@kube_executor_url_prefix\#egg\=airflow \
     && pip3 install click \
     && apt-get remove --purge -yqq $buildDeps libpq-dev \
     && apt-get clean \
