@@ -197,3 +197,11 @@ spec:
         - name: POSTGRES_CREDS
           value: "{{- .Values.airflow.db.postgres.user -}}:{{- .Values.airflow.db.postgres.password -}}"
         args: ["worker"]
+    volumes:
+      - name: dags-data
+      {{- if .Values.airflow.persistence.enabled }}
+        persistentVolumeClaim:
+            claimName: {{ .Values.airflow.persistence.existingClaim | default (include "airflow.fullname" .) }}
+      {{- else }}
+        emptyDir: {}
+      {{- end -}}
