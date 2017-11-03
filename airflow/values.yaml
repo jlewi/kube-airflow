@@ -5,6 +5,7 @@ airflow:
     type: ClusterIP
   baseUrl: "/"
   image: mumoshu/kube-airflow:1.8.0.0-1.6.1
+  dag_path: /dags
   ingress:
     annotations:
     host:
