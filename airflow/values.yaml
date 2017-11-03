@@ -29,5 +29,5 @@ airflow:
     ## Default: volume.alpha.kubernetes.io/storage-class: default
     ##
     # storageClass:
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 1Gi
