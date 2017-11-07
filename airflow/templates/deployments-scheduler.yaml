@@ -21,6 +21,11 @@ spec:
             - configMapRef:
                 name: "{{- .Values.airflow.prefix -}}airflow-env"
           args: ["scheduler", "-n", "{{ .Values.airflow.scheduler_num_runs }}"]
+          {{- if .Values.airflow.airflow_cfg.enabled }}
+          volumeMounts:
+            - mountPath: /usr/local/airflow/airflow.cfg
+              name: {{- .Values.airflow.prefix -}}airflow_cfg
+          {{- end }}
       volumes:
         - name: dags-data
         {{- if .Values.persistence.enabled }}
@@ -29,3 +34,8 @@ spec:
         {{- else }}
           emptyDir: {}
         {{- end -}}
+        {{- if .Values.airflow.airflow_cfg.enabled }}
+        - name: {{- .Values.airflow.prefix -}}airflow_cfg
+          configMap:
+            name: {{- .Values.airflow.prefix -}}airflow_cfg
+        {{- end }}

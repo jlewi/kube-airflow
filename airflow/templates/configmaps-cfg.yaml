@@ -1,0 +1,8 @@
+{{- if .Values.airflow.airflow_cfg.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{- .Values.airflow.prefix -}}airflow_cfg"
+data:
+  airflow.cfg: {{ .Values.airflow.airflow_cfg.data | quote }}
+{{ end }}

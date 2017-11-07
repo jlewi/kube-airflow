@@ -22,3 +22,14 @@ spec:
             - name: "{{- .Values.airflow.prefix -}}web"
               containerPort: 8080
           args: ["webserver"]
+          {{- if .Values.airflow.airflow_cfg.enabled }}
+          volumeMounts:
+            - mountPath: /usr/local/airflow/airflow.cfg
+              name: {{- .Values.airflow.prefix -}}airflow_cfg
+          {{- end }}
+      {{- if .Values.airflow.airflow_cfg.enabled }}
+      volumes:
+        - name: {{- .Values.airflow.prefix -}}airflow_cfg
+          configMap:
+            name: {{- .Values.airflow.prefix -}}airflow_cfg
+      {{- end -}}
