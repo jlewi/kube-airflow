@@ -2,7 +2,6 @@
 
 airflow:
   prefix: "af-"
-  ...
   airflow_cfg:
     enable: true
     data: |
@@ -12,7 +11,7 @@ airflow:
 
     # The folder where your airflow pipelines live, most likely a
     # subfolder in a code repository
-    dags_folder = /usr/local/airflow/dags
+    dags_folder = "gs://mlkube-testing-airflow/dags"
 
     # The folder where airflow should store its log files. This location
     base_log_folder = /usr/local/airflow/logs
@@ -287,4 +286,3 @@ airflow:
     # Additionally you may override worker airflow settings with the AIRFLOW__<SECTION>__<KEY>
     # formatting as supported by airflow normally.
 
-...
