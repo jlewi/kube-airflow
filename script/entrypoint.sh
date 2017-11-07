@@ -23,7 +23,6 @@ echo "Git sync repository: $GIT_SYNC_REPO"
 echo
 
 # Generate Fernet key
-cp -f $AIRFLOW_HOME/airflow.cfg.in $AIRFLOW_HOME/airflow.cfg
 sed -i "s/{{ FERNET_KEY }}/${FERNET_KEY}/" $AIRFLOW_HOME/airflow.cfg
 sed -i "s/{{ POSTGRES_HOST }}/${POSTGRES_HOST}/" $AIRFLOW_HOME/airflow.cfg
 sed -i "s/{{ POSTGRES_CREDS }}/${RABBITMQ_CREDS}/" $AIRFLOW_HOME/airflow.cfg
