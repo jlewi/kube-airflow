@@ -79,7 +79,8 @@ RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-
 COPY script/entrypoint.sh ${AIRFLOW_HOME}/entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_HOME}/airflow.cfg
 COPY script/git-sync ${AIRFLOW_HOME}/git-sync
-COPY ${EMBEDDED_DAGS_LOCATION} ${AIRFLOW_HOME}/dags
+# COPY ${EMBEDDED_DAGS_LOCATION} ${AIRFLOW_HOME}/dags
+COPY dags/ ${AIRFLOW_HOME}/dags
 COPY script/git-sync ${AIRFLOW_HOME}/git-sync
 
 RUN chown -R airflow: ${AIRFLOW_HOME} \

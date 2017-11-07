@@ -8,7 +8,7 @@ airflow:
     type: ClusterIP
   dag_path: /dags
   init_retry_loop:
-  image: gcr.io/mlkube-testing/airflow:1.8.0.0-1.6.1-0.10 
+  image: gcr.io/mlkube-testing/airflow:v20171107-b60ec8c-dirty 
   # image_pull_policy: Always or IfNotPresent
   image_pull_policy: Always
   # Set scheduler_num_runs to -1 to loop indefinitively
@@ -81,4 +81,4 @@ dags:
   poll_interval_sec: 60
   git_sync_debug: false
   # Disable Load examples as soon as you enable git_repo
-  load_examples: true
+  load_examples: false

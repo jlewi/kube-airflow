@@ -3,7 +3,8 @@ KUBECTL_VERSION ?= 1.6.1
 KUBE_AIRFLOW_VERSION ?= 0.10
 
 REPOSITORY ?= gcr.io/mlkube-testing/airflow
-TAG ?= $(AIRFLOW_VERSION)-$(KUBECTL_VERSION)-$(KUBE_AIRFLOW_VERSION)
+TAG ?= $(shell date +v%Y%m%d)-$(shell git describe --tags --always --dirty)
+# TAG ?= $(AIRFLOW_VERSION)-$(KUBECTL_VERSION)-$(KUBE_AIRFLOW_VERSION)
 IMAGE ?= $(REPOSITORY):$(TAG)
 ALIAS ?= $(REPOSITORY):$(AIRFLOW_VERSION)-$(KUBECTL_VERSION)
 
@@ -23,7 +24,7 @@ NAMESPACE ?= airflow-dev
 HELM_APPLICATION_NAME ?= airflow
 HELM_CONFIG ?= config.yaml
 CHART_LOCATION ?= ./airflow
-EMBEDDED_DAGS_LOCATION ?= "./dags"
+EMBEDDED_DAGS_LOCATION ?= "/home/jlewi/git_training/test-infra/airflow/dags"
 REQUIREMENTS_TXT_LOCATION ?= "requirements/dags.txt"
 
 .PHONY: build clean
@@ -53,6 +54,8 @@ helm-uninstall:
 	helm del --purge $(HELM_APPLICATION_NAME)
 
 build: clean $(DOCKERFILE) $(ROOTFS) $(DAGS) $(AIRFLOW_CONF) $(ENTRYPOINT_SH) $(GIT_SYNC) $(AIRFLOW_REQUIREMENTS) $(DAGS_REQUIREMENTS)
+	mkdir -p $(BUILD_ROOT)/dags
+	cp -r $(EMBEDDED_DAGS_LOCATION) $(BUILD_ROOT)/dags
 	cd $(BUILD_ROOT) && docker build -t $(IMAGE) . && docker tag $(IMAGE) $(ALIAS)
 
 publish:
