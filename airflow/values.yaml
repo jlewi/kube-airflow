@@ -23,9 +23,7 @@ airflow:
   # `airflow.prefix`). If you use templating you can still look at the example in
   # `values-airflowcfg.yaml`.
   airflow_cfg:
-    enable: false
-    data:
-
+    enable: true
 celery:
   num_workers: 1
 

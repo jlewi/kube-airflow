@@ -4,7 +4,7 @@ airflow:
   prefix: "af-"
   airflow_cfg:
     enable: true
-    data: |
+    data:
     [core]
     # The home folder for airflow, default is ~/airflow
     airflow_home = /usr/local/airflow
@@ -24,13 +24,7 @@ airflow:
     remote_log_conn_id =
     # Use server-side encryption for logs stored in S3
     encrypt_s3_logs = False
-    # deprecated option for remote log storage, use remote_base_log_folder instead!
-    # s3_log_folder =
-
-    # The executor class that airflow should use. Choices include
-    # SequentialExecutor, LocalExecutor, CeleryExecutor
     executor = CeleryExecutor
-
     # The SqlAlchemy connection string to the metadata database.
     # SqlAlchemy supports many different database engine, more information
     # their website
