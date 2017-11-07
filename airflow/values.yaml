@@ -8,7 +8,7 @@ airflow:
     type: ClusterIP
   dag_path: /dags
   init_retry_loop:
-  image: mumoshu/kube-airflow:1.8.0.0-1.6.1
+  image: gcr.io/mlkube-testing/airflow:1.8.0.0-1.6.1-0.10 
   # image_pull_policy: Always or IfNotPresent
   image_pull_policy: Always
   # Set scheduler_num_runs to -1 to loop indefinitively
@@ -23,7 +23,7 @@ airflow:
   # `airflow.prefix`). If you use templating you can still look at the example in
   # `values-airflowcfg.yaml`.
   airflow_cfg:
-    enable: true
+    enable: false
 celery:
   num_workers: 1
 

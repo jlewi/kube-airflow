@@ -2,7 +2,7 @@ AIRFLOW_VERSION ?= 1.8.0.0
 KUBECTL_VERSION ?= 1.6.1
 KUBE_AIRFLOW_VERSION ?= 0.10
 
-REPOSITORY ?= mumoshu/kube-airflow
+REPOSITORY ?= gcr.io/mlkube-testing/airflow
 TAG ?= $(AIRFLOW_VERSION)-$(KUBECTL_VERSION)-$(KUBE_AIRFLOW_VERSION)
 IMAGE ?= $(REPOSITORY):$(TAG)
 ALIAS ?= $(REPOSITORY):$(AIRFLOW_VERSION)-$(KUBECTL_VERSION)
@@ -56,7 +56,7 @@ build: clean $(DOCKERFILE) $(ROOTFS) $(DAGS) $(AIRFLOW_CONF) $(ENTRYPOINT_SH) $(
 	cd $(BUILD_ROOT) && docker build -t $(IMAGE) . && docker tag $(IMAGE) $(ALIAS)
 
 publish:
-	docker push $(IMAGE) && docker push $(ALIAS)
+	gcloud docker -- push $(IMAGE) && docker push $(ALIAS)
 
 $(DOCKERFILE): $(BUILD_ROOT)
 	sed -e 's/%%KUBECTL_VERSION%%/'"$(KUBECTL_VERSION)"'/g;' \
